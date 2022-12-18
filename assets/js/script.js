@@ -14,8 +14,14 @@ var searchFormHandler = function (event) {
     event.preventDefault();
     var city = cityInput.value.trim();
 
-    console.log(city);
+    console.log(city + ' was searched.');
     addToHistoryList(city);
+
+    cityInput.value = '';
+}
+
+var historicalSearchHandler = function(event) {
+    event.preventDefault();
 }
 
 // searchedCity's weather condition display
@@ -37,22 +43,18 @@ var historyButtonMaker = function(searchedCity) {
         pastSearch.textContent = searchedCity;
         pastSearch.classList = "btn cityButton";
         pastSearch.setAttribute("type", "submit");
-        pastSearch.setAttribute("id", "cityButton historyButton");
+        pastSearch.setAttribute("id", "cityButton historicaLButton");
         pastSearch.setAttribute("data-city", searchedCity);
 
         pastSearchesContainer.prepend(pastSearch);
 }
-
+// City added to presentSearchArr and sent to localStorage
 var addToHistoryList = function (searchedCity) {
-    var historyButton = document.getElementById("historyButton");
-
     historyButtonMaker(searchedCity);
     presentSearchArr.push(searchedCity);
-    console.log(presentSearchArr);
     
     localStorage.setItem("pastSearchArr", JSON.stringify(presentSearchArr));
 }
-
 //load past searches
 var loadHistory = function() {
     JSON.parse(localStorage.getItem("pastSearchArr")).forEach(pastSearchArr => {
@@ -62,7 +64,6 @@ var loadHistory = function() {
     console.log(presentSearchArr);
     console.log('Data Loaded.')
 };
-
 // historyList functionality | click previous city to search that city | put thru weatherCondition function
 
 // empty history button
@@ -76,12 +77,10 @@ var clearHistory = function() {
 
 // forecast display and functionality
 
-// save and load to localStorage functionality
-
 // handler listeners
 searchForm.addEventListener("submit", searchFormHandler);
+pastSearchesContainer.addEventListener("submit", historicalSearchHandler);
 clearHistoryButton.addEventListener("click", clearHistory);
-// pastSearchesContainer.addEventListener("click", );
 
 // load page history
 loadHistory();
