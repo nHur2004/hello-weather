@@ -90,6 +90,11 @@ var forecastCardGen = function(forecast) {
         forecastCard.appendChild(forecastWinds);
         
         forecastCard.appendChild(document.createElement("br"));
+
+        var forecastHumidity = document.createElement("span");
+        forecastHumidity.setAttribute("daysAhead", i + 1);
+        forecastHumidity.textContent = forecast.list[i].main.humidity + " %";
+        forecastCard.appendChild(forecastHumidity);
     }
 };
 
