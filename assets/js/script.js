@@ -68,13 +68,19 @@ var forecastCardGen = function(forecast) {
         fiveDayForecast.appendChild(forecastCard);
 
         var forecastDate = document.createElement("h4");
+        forecastDate.setAttribute("daysAhead", i + 1);
         forecastDate.textContent = "[" + moment.unix(forecast.list[i].dt).format(" L ") + "]";
         forecastCard.appendChild(forecastDate);
 
         var weatherIcon = document.createElement("img");
         weatherIcon.setAttribute("src", `http://openweathermap.org/img/wn/${forecast.list[i].weather[0].icon}@2x.png`);
-        weatherIcon.setAttribute("class", "m-0 float-right");
+        weatherIcon.setAttribute("class", "m-0 p-0");
         forecastCard.appendChild(weatherIcon);
+
+        var forecastTemp = document.createElement("span");
+        forecastTemp.setAttribute("daysAhead", i + 1);
+        forecastTemp.textContent = forecast.list[0].main.temp + " °F";
+        forecastCard.appendChild(forecastTemp);
     }
 };
 
