@@ -48,7 +48,7 @@ var cityWeatherGetter = function(city) {
 
 // forecast display and functionality
 var forecastWeatherGetter = function(city) {
-    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
+    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`
 
     fetch(apiURL)
         .then(function (response) {
@@ -78,6 +78,7 @@ var forecastCardGen = function(forecast) {
         forecastCard.appendChild(weatherIcon);
 
         var forecastTemp = document.createElement("span");
+        forecastTemp.setAttribute("class", "forecastTemp");
         forecastTemp.setAttribute("daysAhead", i + 1);
         forecastTemp.textContent = forecast.list[i].main.temp + " °F";
         forecastCard.appendChild(forecastTemp);
@@ -85,15 +86,17 @@ var forecastCardGen = function(forecast) {
         forecastCard.appendChild(document.createElement("br"));
 
         var forecastWinds = document.createElement("span");
+        forecastWinds.setAttribute("class", "forecastWinds");
         forecastWinds.setAttribute("daysAhead", i + 1);
-        forecastWinds.textContent = forecast.list[i].wind.speed + " MPH";
+        forecastWinds.textContent = forecast.list[i].wind.speed + " MPH Winds";
         forecastCard.appendChild(forecastWinds);
         
         forecastCard.appendChild(document.createElement("br"));
 
         var forecastHumidity = document.createElement("span");
+        forecastHumidity.setAttribute("class", "forecastHumidity");
         forecastHumidity.setAttribute("daysAhead", i + 1);
-        forecastHumidity.textContent = forecast.list[i].main.humidity + " %";
+        forecastHumidity.textContent = forecast.list[i].main.humidity + " % Humidity";
         forecastCard.appendChild(forecastHumidity);
     }
 };
