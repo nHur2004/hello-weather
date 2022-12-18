@@ -62,14 +62,13 @@ var forecastWeatherGetter = function(city) {
 var forecastCardGen = function(forecast) {
     fiveDayForecast.textContent = '';
 
-    for ( i = 0; i < 5; i++ ) {
+    for ( i = 5; i < 45; i = i + 8 ) {
         var forecastCard = document.createElement("div");
         forecastCard.setAttribute("class", "col-sm-2 forecastCard");
         fiveDayForecast.appendChild(forecastCard);
 
         var forecastDate = document.createElement("h4");
-        forecastDate.setAttribute("daysAhead", i + 1);
-        forecastDate.textContent = "[" + moment.unix(forecast.list[i].dt).format(" L ") + "]";
+        forecastDate.textContent = "[" + moment.unix( forecast.list[i].dt ).format(" L ") + "]";
         forecastCard.appendChild(forecastDate);
 
         var weatherIcon = document.createElement("img");
@@ -77,9 +76,10 @@ var forecastCardGen = function(forecast) {
         weatherIcon.setAttribute("class", "m-0 p-0");
         forecastCard.appendChild(weatherIcon);
 
+        forecastCard.appendChild(document.createElement("br"));
+
         var forecastTemp = document.createElement("span");
         forecastTemp.setAttribute("class", "forecastTemp");
-        forecastTemp.setAttribute("daysAhead", i + 1);
         forecastTemp.textContent = forecast.list[i].main.temp + " °F";
         forecastCard.appendChild(forecastTemp);
 
@@ -87,7 +87,6 @@ var forecastCardGen = function(forecast) {
 
         var forecastWinds = document.createElement("span");
         forecastWinds.setAttribute("class", "forecastWinds");
-        forecastWinds.setAttribute("daysAhead", i + 1);
         forecastWinds.textContent = forecast.list[i].wind.speed + " MPH Winds";
         forecastCard.appendChild(forecastWinds);
         
@@ -95,7 +94,6 @@ var forecastCardGen = function(forecast) {
 
         var forecastHumidity = document.createElement("span");
         forecastHumidity.setAttribute("class", "forecastHumidity");
-        forecastHumidity.setAttribute("daysAhead", i + 1);
         forecastHumidity.textContent = forecast.list[i].main.humidity + " % Humidity";
         forecastCard.appendChild(forecastHumidity);
     }
