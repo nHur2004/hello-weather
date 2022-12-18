@@ -53,8 +53,8 @@ var cityInfoGenerator = function (weather, searchCity) {
     cityWeatherInfo.appendChild(cityNameDisplay);
 
     var currentDate = document.createElement("span");
-    currentDate.setAttribute("id", "currentDay")
-    currentDate.textContent = " [" + moment(weather.dt).format("MM/DD/YY") + "]: ";
+    currentDate.setAttribute("id", "currentDay");
+    currentDate.textContent = " [" + moment.unix(weather.dt).format(" L ") + "]: ";
     cityNameDisplay.appendChild(currentDate);
 
     var cityInfo = document.createElement("p");
@@ -120,19 +120,26 @@ var clearHistory = function() {
 }
 
 // UV index color functionality
-var UVIndexConditions = function(UVrange) {
+var UVIndexConditions = function(UVrangeTXT) {
     var UVSpan = document.getElementById("UVspan");
+    var UVrange = Number(UVrangeTXT);
+    console.log(UVrange);
 
     if ( UVrange <= 2 ) {
         $(UVSpan).addClass( "bg-success bg-gradient" );
+        console.log('UV Index is low.')
     } else if ( UVrange <= 5 ) {
         $(UVSpan).addClass( "bg-warning bg-gradient" );
+        console.log('UV Index is moderate.')
     } else if ( UVrange <= 7 ) {
         $(UVSpan).addClass( "bg-danger bg-gradient" );
+        console.log('UV Index is high.')
     } else if ( UVrange <= 10 ) {
         $(UVSpan).addClass( "bg-secondary bg-gradient" );
+        console.log('UV Index is very high.')
     } else if ( UVrange >= 11 ) {
-        $(UVSpan).addClass( "bg-dark bg-gradient text-warning" )
+        $(UVSpan).addClass( "bg-dark bg-gradient text-warning" );
+        console.log('UV Index is extreme.')
     }
 }
 // UV index getter
