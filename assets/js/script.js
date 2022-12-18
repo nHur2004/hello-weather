@@ -79,8 +79,17 @@ var forecastCardGen = function(forecast) {
 
         var forecastTemp = document.createElement("span");
         forecastTemp.setAttribute("daysAhead", i + 1);
-        forecastTemp.textContent = forecast.list[0].main.temp + " °F";
+        forecastTemp.textContent = forecast.list[i].main.temp + " °F";
         forecastCard.appendChild(forecastTemp);
+
+        forecastCard.appendChild(document.createElement("br"));
+
+        var forecastWinds = document.createElement("span");
+        forecastWinds.setAttribute("daysAhead", i + 1);
+        forecastWinds.textContent = forecast.list[i].wind.speed + " MPH";
+        forecastCard.appendChild(forecastWinds);
+        
+        forecastCard.appendChild(document.createElement("br"));
     }
 };
 
