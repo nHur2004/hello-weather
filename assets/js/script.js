@@ -17,11 +17,16 @@ var searchFormHandler = function (event) {
     console.log(city + ' was searched.');
     addToHistoryList(city);
 
+    cityWeatherGetter(city);
+
     cityInput.value = '';
 }
 
 var historicalSearchHandler = function(event) {
     event.preventDefault();
+    var oldSearch = document.getElementById("historicalButton");
+    
+    cityWeatherGetter(oldSearch);
 }
 
 // searchedCity's weather condition display
@@ -32,9 +37,49 @@ var cityWeatherGetter = function(city) {
         .then(function (response) {
             response.json()
                 .then(function (data) {
-                    // function goes here
+                    cityInfoGenerator(data);
                 })
         })
+}
+
+// cityInfo HTML maker
+var cityInfoGenerator = function (weather, searchCity) {
+    cityWeatherInfo.textContent = '';
+    
+    var cityNameDisplay = document.createElement("h3");
+    cityNameDisplay.textContent = weather.name;
+    cityWeatherInfo.appendChild(cityNameDisplay);
+
+    var currentDate = document.createElement("span");
+    currentDate.setAttribute("id", "currentDay")
+    currentDate.textContent = " [" + moment(weather.dt).format("MM/DD/YY") + "]: ";
+    cityNameDisplay.appendChild(currentDate);
+
+    var cityInfo = document.createElement("p");
+    cityInfo.setAttribute("id", "weatherInfo");
+    cityWeatherInfo.appendChild(cityInfo);
+
+    var cityTemp = document.createElement("span");
+    cityTemp.textContent = "Temperature: " + weather.main.temp + " °F";
+    cityInfo.appendChild(cityTemp);
+
+    cityInfo.appendChild(document.createElement("br"));
+
+    var cityWindSpd = document.createElement("span");
+    cityWindSpd.textContent = "Wind Speeds: " + weather.wind.speed + " MPH";
+    cityInfo.appendChild(cityWindSpd);
+
+    cityInfo.appendChild(document.createElement("br"));
+
+    var cityHumidity = document.createElement("span");
+    cityHumidity.textContent = "Humidity: " + weather.main.humidity + " %";
+    cityInfo.appendChild(cityHumidity);
+
+    cityInfo.appendChild(document.createElement("br"));
+    
+    var lat = weather.coord.lat;
+    var lon = weather.coord.lon;
+    retrieveUVI(lat, lon);
 }
 
 // City added to historyList
@@ -75,19 +120,45 @@ var clearHistory = function() {
 
 // UV index color functionality
 var UVIndexConditions = function(UVrange) {
-    var UVSpan = document.getElementById("span");
+    var UVSpan = $('#UVspan');
 
     if ( UVrange <= 2 ) {
-        UVSpan.addClass("bg-success bg-gradient");
+        $('#UVSpan').setAttribute( "class", "bg-success bg-gradient" );
     } else if ( UVrange <= 5 ) {
-        UVSpan.addClass("bg-warning bg-gradient");
+        $('#UVSpan').setAttribute( "class", "bg-warning bg-gradient" );
     } else if ( UVrange <= 7 ) {
-        UVSpan.addClass("bg-danger bg-gradient");
-    } else if ( UVrange <=10 ) {
-        UVSpan.addClass("bg-secondary bg-gradient");
-    } else {
-        UVSpan.addClass("bg-dark bg-gradient text-warning")
+        $('#UVSpan').setAttribute( "class", "bg-danger bg-gradient" );
+    } else if ( UVrange <= 10 ) {
+        $('#UVSpan').setAttribute( "class", "bg-secondary bg-gradient" );
+    } else if ( UVrange >= 11 ) {
+        $('#UVSpan').setAttribute( "class", "bg-dark bg-gradient text-warning" )
     }
+}
+// UV index getter
+var retrieveUVI = function(lat, lon) {
+    var apiURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`;
+
+    fetch(apiURL)
+        .then(function (response) {
+            response.json().then(function (uvi) {
+                buildUVI(uvi);
+            })
+        })
+}
+// UV index builder
+var buildUVI = function (uvi) {
+    var cityInfo = document.getElementById("weatherInfo");
+
+    var cityUVI = document.createElement("span");
+    cityUVI.textContent = "UV Index: ";
+
+    var cityUVIValue = document.createElement("span");
+    cityUVIValue.setAttribute("id", "UVspan");
+    cityUVIValue.textContent = uvi.value;
+    UVIndexConditions(uvi.value)
+
+    cityUVI.appendChild(cityUVIValue);
+    cityInfo.appendChild(cityUVI);
 }
 
 // forecast display and functionality

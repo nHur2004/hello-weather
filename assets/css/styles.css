@@ -75,7 +75,7 @@ body {
 .cityInfo p {
     font-size: 1.4rem;
 }
-.cityInfo span {
+.cityInfo #UVspan {
     padding: 0.5rem;
     border-radius: 0.75rem;
 }
