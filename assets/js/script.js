@@ -26,7 +26,7 @@ var historicalSearchHandler = function(event) {
 
 // searchedCity's weather condition display
 var cityWeatherGetter = function(city) {
-    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
     fetch(apiURL)
         .then(function (response) {
@@ -74,6 +74,21 @@ var clearHistory = function() {
 }
 
 // UV index color functionality
+var UVIndexConditions = function(UVrange) {
+    var UVSpan = document.getElementById("span");
+
+    if ( UVrange <= 2 ) {
+        UVSpan.addClass("bg-success bg-gradient");
+    } else if ( UVrange <= 5 ) {
+        UVSpan.addClass("bg-warning bg-gradient");
+    } else if ( UVrange <= 7 ) {
+        UVSpan.addClass("bg-danger bg-gradient");
+    } else if ( UVrange <=10 ) {
+        UVSpan.addClass("bg-secondary bg-gradient");
+    } else {
+        UVSpan.addClass("bg-dark bg-gradient text-warning")
+    }
+}
 
 // forecast display and functionality
 

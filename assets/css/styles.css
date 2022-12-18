@@ -76,10 +76,12 @@ body {
     font-size: 1.4rem;
 }
 .cityInfo span {
-    color: var(--bg-color);
-    background-color: var(--secondary-color);
     padding: 0.5rem;
     border-radius: 0.75rem;
+}
+.exampleSpan {
+    color: var(--bg-color);
+    background-color: var(--secondary-color);
 }
 /* forecast styling */
 .forecast {
