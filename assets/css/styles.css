@@ -1,0 +1,72 @@
+:root {
+    --primary-color: #dcbb89;
+    --secondary-color: #594225;
+    --font1-color: #401902;
+    --font2-color: #260801;
+    --bg-color: rgb(237, 224, 219);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Open Sans";
+}
+
+/* Body Styling */
+body {
+    color: var(--font2-color);
+    width: auto;
+}
+
+/* Header Styling */
+.jumbotron {
+    text-align: center;
+    background-color: var(--bg-color);
+    padding: 0.5rem;
+}
+
+/* Main Styling */
+/* search column styling */
+.searchForm {
+    padding: 0.5rem;
+}
+.searchForm input,
+.searchForm .btn {
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+}
+.searchForm .btn {
+    background-color: var(--bg-color);
+}
+/* decor */
+.decor {
+    background-color: var(--bg-color);
+    border: 5px var(--bg-color) solid;
+    border-radius: 10%;
+    width: 90%;
+    margin: auto;
+}
+/* history styling */
+/* city info box styling */
+.cityInfo {
+    border: 2px var(--font2-color) solid;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+}
+.cityInfo p {
+    font-size: 1.4rem;
+}
+.cityInfo span {
+    color: var(--bg-color);
+    background-color: var(--secondary-color);
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+}
+/* forecast styling */
+.forecast {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
