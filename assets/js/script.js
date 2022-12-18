@@ -18,6 +18,7 @@ var searchFormHandler = function (event) {
     addToHistoryList(city);
 
     cityWeatherGetter(city);
+    forecastWeatherGetter(city);
 
     cityInput.value = '';
 }
@@ -29,6 +30,7 @@ var historicalSearchHandler = function(event) {
     if (city) {
         console.log(city + ' was searched.')
         cityWeatherGetter(city);
+        forecastWeatherGetter(city);
     };
 };
 // searchedCity's weather condition display
@@ -43,6 +45,38 @@ var cityWeatherGetter = function(city) {
                 })
         })
 }
+
+// forecast display and functionality
+var forecastWeatherGetter = function(city) {
+    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
+
+    fetch(apiURL)
+        .then(function (response) {
+            response.json()
+                .then(function (data) {
+                    forecastCardGen(data);
+                })
+        })
+}
+// forecast card maker
+var forecastCardGen = function(forecast) {
+    fiveDayForecast.textContent = '';
+
+    for ( i = 0; i < 5; i++ ) {
+        var forecastCard = document.createElement("div");
+        forecastCard.setAttribute("class", "col-sm-2 forecastCard");
+        fiveDayForecast.appendChild(forecastCard);
+
+        var forecastDate = document.createElement("h4");
+        forecastDate.textContent = "[" + moment.unix(forecast.list[i].dt).format(" L ") + "]";
+        forecastCard.appendChild(forecastDate);
+
+        var weatherIcon = document.createElement("img");
+        weatherIcon.setAttribute("src", `http://openweathermap.org/img/wn/${forecast.list[i].weather[0].icon}@2x.png`);
+        weatherIcon.setAttribute("class", "m-0 float-right");
+        forecastCard.appendChild(weatherIcon);
+    }
+};
 
 // cityInfo HTML maker
 var cityInfoGenerator = function (weather, searchCity) {
@@ -173,8 +207,6 @@ var buildUVI = function (uvi) {
 
     UVIndexConditions(uvi.value)
 }
-
-// forecast display and functionality
 
 // handler listeners
 searchForm.addEventListener("submit", searchFormHandler);
