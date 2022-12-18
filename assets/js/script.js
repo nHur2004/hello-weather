@@ -54,8 +54,13 @@ var cityInfoGenerator = function (weather, searchCity) {
 
     var currentDate = document.createElement("span");
     currentDate.setAttribute("id", "currentDay");
-    currentDate.textContent = " [" + moment.unix(weather.dt).format(" L ") + "]: ";
+    currentDate.textContent = " [" + moment.unix(weather.dt).format(" L ") + "] ";
     cityNameDisplay.appendChild(currentDate);
+
+    var weatherIcon = document.createElement("img");
+    weatherIcon.setAttribute("src", `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
+    weatherIcon.setAttribute("class", "m-0 position-absolute");
+    cityNameDisplay.appendChild(weatherIcon);
 
     var cityInfo = document.createElement("p");
     cityInfo.setAttribute("id", "weatherInfo");
@@ -165,7 +170,7 @@ var buildUVI = function (uvi) {
 
     cityUVI.appendChild(cityUVIValue);
     cityInfo.appendChild(cityUVI);
-    
+
     UVIndexConditions(uvi.value)
 }
 
