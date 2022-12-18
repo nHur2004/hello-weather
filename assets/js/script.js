@@ -124,7 +124,6 @@ var UVIndexConditions = function(UVrangeTXT) {
     var UVSpan = document.getElementById("UVspan");
     var UVrange = Number(UVrangeTXT);
     console.log(UVrange);
-
     if ( UVrange <= 2 ) {
         $(UVSpan).addClass( "bg-success bg-gradient" );
         console.log('UV Index is low.')
@@ -163,10 +162,11 @@ var buildUVI = function (uvi) {
     var cityUVIValue = document.createElement("span");
     cityUVIValue.setAttribute("id", "UVspan");
     cityUVIValue.textContent = uvi.value;
-    UVIndexConditions(uvi.value)
 
     cityUVI.appendChild(cityUVIValue);
     cityInfo.appendChild(cityUVI);
+    
+    UVIndexConditions(uvi.value)
 }
 
 // forecast display and functionality
