@@ -1,4 +1,5 @@
 var cities = [];
+var presentSearchArr = [];
 
 var clearHistoryButton = document.getElementById("trash");
 var searchForm = document.getElementById("searchForm");
@@ -31,22 +32,44 @@ var cityWeatherGetter = function(city) {
 }
 
 // City added to historyList
-var addToHistoryList = function (searchedCity) {
-    pastSearch = document.createElement("button");
-    pastSearch.textContent = searchedCity;
-    pastSearch.classList = "btn cityButton";
-    pastSearch.setAttribute("type", "submit");
-    pastSearch.setAttribute("id", "cityButton");
-    pastSearch.setAttribute("data-city", searchedCity);
-    
-    pastSearchesContainer.prepend(pastSearch);
+var historyButtonMaker = function(searchedCity) {
+    var pastSearch = document.createElement("button");
+        pastSearch.textContent = searchedCity;
+        pastSearch.classList = "btn cityButton";
+        pastSearch.setAttribute("type", "submit");
+        pastSearch.setAttribute("id", "cityButton historyButton");
+        pastSearch.setAttribute("data-city", searchedCity);
+
+        pastSearchesContainer.prepend(pastSearch);
 }
+
+var addToHistoryList = function (searchedCity) {
+    var historyButton = document.getElementById("historyButton");
+
+    historyButtonMaker(searchedCity);
+    presentSearchArr.push(searchedCity);
+    console.log(presentSearchArr);
+    
+    localStorage.setItem("pastSearchArr", JSON.stringify(presentSearchArr));
+}
+
+//load past searches
+var loadHistory = function() {
+    JSON.parse(localStorage.getItem("pastSearchArr")).forEach(pastSearchArr => {
+        addToHistoryList(pastSearchArr);
+    });
+
+    console.log(presentSearchArr);
+    console.log('Data Loaded.')
+};
 
 // historyList functionality | click previous city to search that city | put thru weatherCondition function
 
 // empty history button
 var clearHistory = function() {
     pastSearchesContainer.innerHTML = "";
+    localStorage.removeItem("pastSearchArr");
+    presentSearchArr = [];
 }
 
 // UV index color functionality
@@ -59,3 +82,6 @@ var clearHistory = function() {
 searchForm.addEventListener("submit", searchFormHandler);
 clearHistoryButton.addEventListener("click", clearHistory);
 // pastSearchesContainer.addEventListener("click", );
+
+// load page history
+loadHistory();
