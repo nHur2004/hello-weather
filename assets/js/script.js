@@ -22,13 +22,15 @@ var searchFormHandler = function (event) {
     cityInput.value = '';
 }
 
+// historyList functionality | click previous city to search that city | put thru weatherCondition function
 var historicalSearchHandler = function(event) {
     event.preventDefault();
-    var oldSearch = document.getElementById("historicalButton");
+    var button = document.getElementById("historicalButton");
+    var city = button.dataset.city;
     
-    cityWeatherGetter(oldSearch);
+    console.log(city + ' was searched.');
+    cityWeatherGetter(city);
 }
-
 // searchedCity's weather condition display
 var cityWeatherGetter = function(city) {
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
@@ -88,7 +90,7 @@ var historyButtonMaker = function(searchedCity) {
         pastSearch.textContent = searchedCity;
         pastSearch.classList = "btn cityButton";
         pastSearch.setAttribute("type", "submit");
-        pastSearch.setAttribute("id", "cityButton historicaLButton");
+        pastSearch.setAttribute("id", "historicalButton");
         pastSearch.setAttribute("data-city", searchedCity);
 
         pastSearchesContainer.prepend(pastSearch);
@@ -109,7 +111,6 @@ var loadHistory = function() {
     console.log(presentSearchArr);
     console.log('Data Loaded.')
 };
-// historyList functionality | click previous city to search that city | put thru weatherCondition function
 
 // empty history button
 var clearHistory = function() {
@@ -120,18 +121,18 @@ var clearHistory = function() {
 
 // UV index color functionality
 var UVIndexConditions = function(UVrange) {
-    var UVSpan = $('#UVspan');
+    var UVSpan = document.getElementById("UVspan");
 
     if ( UVrange <= 2 ) {
-        $('#UVSpan').setAttribute( "class", "bg-success bg-gradient" );
+        $(UVSpan).addClass( "bg-success bg-gradient" );
     } else if ( UVrange <= 5 ) {
-        $('#UVSpan').setAttribute( "class", "bg-warning bg-gradient" );
+        $(UVSpan).addClass( "bg-warning bg-gradient" );
     } else if ( UVrange <= 7 ) {
-        $('#UVSpan').setAttribute( "class", "bg-danger bg-gradient" );
+        $(UVSpan).addClass( "bg-danger bg-gradient" );
     } else if ( UVrange <= 10 ) {
-        $('#UVSpan').setAttribute( "class", "bg-secondary bg-gradient" );
+        $(UVSpan).addClass( "bg-secondary bg-gradient" );
     } else if ( UVrange >= 11 ) {
-        $('#UVSpan').setAttribute( "class", "bg-dark bg-gradient text-warning" )
+        $(UVSpan).addClass( "bg-dark bg-gradient text-warning" )
     }
 }
 // UV index getter
