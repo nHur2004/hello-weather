@@ -25,12 +25,12 @@ var searchFormHandler = function (event) {
 // historyList functionality | click previous city to search that city | put thru weatherCondition function
 var historicalSearchHandler = function(event) {
     event.preventDefault();
-    var button = document.getElementById("historicalButton");
-    var city = button.dataset.city;
-    
-    console.log(city + ' was searched.');
-    cityWeatherGetter(city);
-}
+    var city = event.target.getAttribute("data-city");
+    if (city) {
+        console.log(city + ' was searched.')
+        cityWeatherGetter(city);
+    };
+};
 // searchedCity's weather condition display
 var cityWeatherGetter = function(city) {
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
@@ -173,7 +173,7 @@ var buildUVI = function (uvi) {
 
 // handler listeners
 searchForm.addEventListener("submit", searchFormHandler);
-pastSearchesContainer.addEventListener("submit", historicalSearchHandler);
+pastSearchesContainer.addEventListener("click", historicalSearchHandler);
 clearHistoryButton.addEventListener("click", clearHistory);
 
 // load page history
