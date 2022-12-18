@@ -27,28 +27,41 @@ body {
 }
 
 /* Main Styling */
-/* search column styling */
+/* searchBox styling */
+.searchBox button {
+    display: block;
+}
+/* searchForm styling */
 .searchForm {
     padding: 0.5rem;
 }
 .searchForm input,
-.searchForm .btn {
+.searchForm .cityButton,
+.cityButton {
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     font-size: 1.5rem;
 }
-.searchForm .btn {
+.searchForm .btn,
+.cityButton {
     background-color: var(--bg-color);
 }
-/* decor */
-.decor {
+/* clear history */
+.trash {
+    text-align: center;
     background-color: var(--bg-color);
     border: 5px var(--bg-color) solid;
     border-radius: 10%;
     width: 90%;
     margin: auto;
+    margin-bottom: 1.5rem;
 }
 /* history styling */
+.historyList button {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
 /* city info box styling */
 .cityInfo {
     border: 2px var(--font2-color) solid;
